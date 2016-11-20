@@ -6,9 +6,13 @@ public class PlayerController : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public GameObject healthBarPrefab;
+    [SyncVar]
+    public int score;
 
     void Start()
     {
+
+        this.score = 0;
         var healthBar = (GameObject)Instantiate(healthBarPrefab, transform.position, transform.rotation);
         Billboard b = healthBar.GetComponent<Billboard>();
         b.attachedEntity = gameObject;
@@ -26,7 +30,7 @@ public class PlayerController : NetworkBehaviour
             return;
         }
 
-        gameObject.tag = "Player";
+        gameObject.tag = "PlayerSelf";
 
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
@@ -53,12 +57,23 @@ public class PlayerController : NetworkBehaviour
 
         // Add velocity to the bullet
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        bullet.GetComponent<Bullet>().setFiredBy(gameObject);
 
         // Spawn the bullet on the Clients
         NetworkServer.Spawn(bullet);
 
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
+    }
+
+    public int getPlayerScore()
+    {
+        return this.score;
+    }
+
+    public void addScore(int addedScore)
+    {
+        this.score += addedScore;
     }
 
     public override void OnStartLocalPlayer()

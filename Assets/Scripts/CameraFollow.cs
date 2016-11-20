@@ -6,7 +6,6 @@ public class CameraFollow : NetworkBehaviour
 {
     Vector3 initialCameraPosition;
     Quaternion intialCameraRotation;
-    private bool reconnect = false;
 
     private Transform target;            // The position that that camera will be following.
     public float smoothing = 5f;        // The speed with which the camera will be following.
@@ -72,7 +71,7 @@ public class CameraFollow : NetworkBehaviour
 
     private bool setCurrentPlayerSuccess()
     {
-        currentPlayer = GameObject.FindGameObjectWithTag("Player");
+        currentPlayer = GameObject.FindGameObjectWithTag("PlayerSelf");
 
         if (currentPlayer == null)
         {

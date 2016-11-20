@@ -9,6 +9,7 @@ public class Health : NetworkBehaviour
     public const int maxHealth = 100;
     public bool destroyOnDeath;
     public GameObject healthBarPrefab;
+    public int scoreOnKill;
 
     [SyncVar(hook = "OnChangeHealth")]
     public int currentHealth = maxHealth;
@@ -34,7 +35,7 @@ public class Health : NetworkBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, GameObject firedBy, int scoreAmount)
     {
         if (!isServer)
             return;
@@ -42,7 +43,8 @@ public class Health : NetworkBehaviour
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
-            if (destroyOnDeath)
+            firedBy.GetComponent<PlayerController>().addScore(scoreAmount);
+            if (destroyOnDeath) //For the normal PvE enemies
             {
 
                 //Also destroy the healthbar here!!!
@@ -51,7 +53,7 @@ public class Health : NetworkBehaviour
                 GameObject foregroundGO = healthBar.gameObject; //This should give the foreground GO
 
                 //This should give the Healthbar Canvas GO
-                GameObject healthbarCanvas = foregroundGO.transform.parent.gameObject.transform.parent.gameObject;
+                GameObject healthbarCanvas = healthBar.gameObject.transform.parent.gameObject.transform.parent.gameObject;
 
                 //Destroy the healthbar and this GO
                 Destroy(healthbarCanvas);
