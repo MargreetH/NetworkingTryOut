@@ -5,6 +5,19 @@ public class PlayerController : NetworkBehaviour
 {
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
+    public GameObject healthBarPrefab;
+
+    void Start()
+    {
+        var healthBar = (GameObject)Instantiate(healthBarPrefab, transform.position, transform.rotation);
+        Billboard b = healthBar.GetComponent<Billboard>();
+        b.attachedEntity = gameObject;
+        Health health = GetComponent<Health>();
+
+        //Get the health bar
+        RectTransform hb = healthBar.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        health.healthBar = hb;
+    }
 
     void Update()
     {
@@ -12,6 +25,8 @@ public class PlayerController : NetworkBehaviour
         {
             return;
         }
+
+        gameObject.tag = "Player";
 
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
@@ -49,5 +64,10 @@ public class PlayerController : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         GetComponent<MeshRenderer>().material.color = Color.blue;
+    }
+
+    public bool isLocalPlayerBoolean()
+    {
+        return isLocalPlayer;
     }
 }
