@@ -3,7 +3,6 @@ using System.Collections;
 
 public class ScoreUICanvas : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
 	
 	}

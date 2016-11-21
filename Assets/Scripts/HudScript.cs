@@ -6,20 +6,33 @@ public class HudScript : MonoBehaviour {
     private PlayerController[] players;
     private PlayerController playerSelf;
     private int numberOfCurrentPlayers;
+    public GameObject scoreTextPrefab;
+    bool selfAdded = false;
 
-	// Use this for initialization
-	void Start () {
+    private GameObject selfScoreBar;
+
+    // Use this for initialization
+    void Start () {
 
 	 if (!playersIngame())
         {
             return;
         }
 
+        addSelf();
+
+
+
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (!selfAdded)
+        {
+            selfAdded = true;
+            addSelf();
+        }
 	
 	}
 
@@ -43,5 +56,16 @@ public class HudScript : MonoBehaviour {
             return false;
         }
         return true;
+    }
+
+    private void addSelf()
+    {
+        selfScoreBar = (GameObject)Instantiate(scoreTextPrefab) as GameObject;
+        selfScoreBar.transform.SetParent(gameObject.transform, false);
+
+        Vector3 position1 = new Vector3(0f, 0f, 0f);
+        position1.x += gameObject.transform.position.x - 100f;
+        position1.y += gameObject.transform.position.y -50f;
+        selfScoreBar.transform.localPosition = position1;     
     }
 }
