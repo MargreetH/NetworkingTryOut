@@ -24,7 +24,7 @@ public class EnemySpawner : NetworkBehaviour
     void Update()
     {
         spawnTimer = Time.timeSinceLevelLoad - counter*spawnTime - timeSinceGameStarted;
-        Debug.Log(spawnTimer);
+        //Debug.Log(spawnTimer);
 
         if (spawnTimer >= spawnTime)
         {
