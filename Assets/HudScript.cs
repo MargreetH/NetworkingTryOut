@@ -28,6 +28,11 @@ public class HudScript : MonoBehaviour {
 
     }
 
+    private void removePlayer()
+    {
+
+    }
+
     //Check if there are players ingame
     private bool playersIngame()
     {
@@ -37,8 +42,6 @@ public class HudScript : MonoBehaviour {
         {
             return false;
         }
-
-
         return true;
     }
 }

@@ -8,6 +8,7 @@ public class ScoreScript : MonoBehaviour {
     PlayerController attachedEntity;
     private bool hadPreviousEntity = false;
 
+
 	// Use this for initialization
 	void Start () {
         scoreText = gameObject.GetComponent<Text>();

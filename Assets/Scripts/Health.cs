@@ -50,15 +50,12 @@ public class Health : NetworkBehaviour
                 //Also destroy the healthbar here!!!
                 //Get the parent of the foreground -> the complete healthbar
 
-                GameObject foregroundGO = healthBar.gameObject; //This should give the foreground GO
-
                 //This should give the Healthbar Canvas GO
                 GameObject healthbarCanvas = healthBar.gameObject.transform.parent.gameObject.transform.parent.gameObject;
 
                 //Destroy the healthbar and this GO
                 Destroy(healthbarCanvas);
-                Destroy(gameObject);
-              
+                Destroy(gameObject);           
             }
             else
             {

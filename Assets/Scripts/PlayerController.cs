@@ -21,6 +21,13 @@ public class PlayerController : NetworkBehaviour
         //Get the health bar
         RectTransform hb = healthBar.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         health.healthBar = hb;
+
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        gameObject.tag = "PlayerSelf";
     }
 
     void Update()
@@ -30,7 +37,7 @@ public class PlayerController : NetworkBehaviour
             return;
         }
 
-        gameObject.tag = "PlayerSelf";
+        //gameObject.tag = "PlayerSelf";
 
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
